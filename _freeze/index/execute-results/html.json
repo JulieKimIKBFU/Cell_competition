@@ -1,0 +1,15 @@
+{
+  "hash": "79036780007c1a60fc1b95631563db23",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Клеточная конкуренция как механизм контроля качества в молодом эмбриональном развитии млекопитающих\"\nnumber-sections: true\ntoc: true\ntoc-title: \"Оглавление\"\nfontsize: 12pt\nlang: ru-RU\npapersize: a4\ngeometry: left->3cm, righ->1.5cm, to->2cm, bottom->2cm\nlinestretch: 1.5\ndocumentclass: article\noutput:\n  docx:\n    includes:\n      in-header: custom-gost.sty\nbibliography: references.bib\nreference-doc: docx\ncsl: gost-r-7-0-5.csl\n---\n\n\n\n\n\n## Section\n\nThis is a simple placeholder for the manuscript's main document [@knuth84].\n\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code .hidden}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 2\n```\n\n\n:::\n:::\n\n\n\n\n\nКак указано в исследовании \\[\\@nature2024\\].\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
