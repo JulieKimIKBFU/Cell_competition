@@ -3,19 +3,29 @@ project:
 
 manuscript:
   article: index.qmd
+  notebooks:
+    - notebook: notebooks/kursovaya_analysis.Rmd
+      title: Analysis #TODO: Rename the title of the notebook
 
+lang: ru
 format:
   html:
+    code-fold: true
     comments:
       hypothesis: true
-  docx: default
+    theme: zephyr
+    citations-hover: true
+    crossrefs-hover: true
+    title-block-style: manuscript
+  docx:
+    reference-doc: reference.docx
+    number-sections: false
+    toc: false
+    toc-depth: 2
   jats: default
-
-  # (other formats)
-  # pdf: default
+  pdf: default
 
 execute:
-  freeze: true
+  freeze: auto
 
 editor: visual
-
