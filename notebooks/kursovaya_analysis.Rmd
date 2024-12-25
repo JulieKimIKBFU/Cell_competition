@@ -37,6 +37,7 @@ library(umap)
 library(ComplexHeatmap)
 library(gridExtra)
 library(grid)
+library(scales)
 library(viridis)
 library(destiny)
 library(circlize)
@@ -46,6 +47,8 @@ library(fpc)
 library(Seurat)
 library(scater)
 library(clustree)
+library(karyoploteR)
+library(UpSetR)
 ```
 
 ```{r}
@@ -236,7 +239,6 @@ classe_new <- data.frame(deepSplit0 = my.clusters_0, deepSplit1 = my.clusters_1)
 ```
 
 ```{r}
-library(clustree)
 clustree(classe_new, prefix = "deepSplit")
 ```
 
@@ -601,8 +603,6 @@ cells_epi <- row.names(classe)[classe$cluster == 1 | classe$cluster == 3 | class
 
 Cluster_col <- classe$cluster
 
-library(ggplot2)
-
 set.seed(1000)
 dm <- DiffusionMap(dissimilarity)
 
@@ -657,7 +657,6 @@ time_all_epi <- dpt$DPT307
 Кластеры победителей и проигравших находятся на двух концах пути (траектории), поэтому dpt можно интерпретировать как “результат проигрыша”.
 
 ```{r}
-library(destiny)
 cells_epi_fmk <- row.names(classe)[(classe$cluster == 1 & classe$condizione == "Cell competition OFF") | (classe$cluster == 3 & classe$condizione == "Cell competition OFF") | (classe$cluster == 4 & classe$condizione == "Cell competition OFF")]
 
 set.seed(1000)
@@ -1372,7 +1371,6 @@ bb <- sum(up_p53 %in% row.names(down_loser_1_4))
 value <- c(aa, bb)
 group <- c(a, b)
 df <- data.frame(group, value)
-library(ggplot2)
 bp <- ggplot(df, aes(x = "", y = value, fill = group)) +
     geom_bar(width = 1, stat = "identity")
 # bp
@@ -1380,7 +1378,6 @@ bp <- ggplot(df, aes(x = "", y = value, fill = group)) +
 
 pie <- bp + coord_polar("y", start = 0)
 # pie
-library(scales)
 
 blank_theme <- theme_minimal() +
     theme(
@@ -1407,7 +1404,6 @@ bb <- sum(down_p53 %in% row.names(down_loser_1_4))
 value <- c(aa, bb)
 group <- c(a, b)
 df <- data.frame(group, value)
-library(ggplot2)
 bp <- ggplot(df, aes(x = "", y = value, fill = group)) +
     geom_bar(width = 1, stat = "identity")
 # bp
@@ -1415,7 +1411,6 @@ bp <- ggplot(df, aes(x = "", y = value, fill = group)) +
 
 pie <- bp + coord_polar("y", start = 0)
 # pie
-library(scales)
 
 blank_theme <- theme_minimal() +
     theme(
@@ -1641,7 +1636,6 @@ geni_upr[which(!(geni_upr %in% nome_gene$Gene.name))] <- "Foxo3"
 Из 32 генов, относящихся к путям UPR и ISR, 12 генов демонстрируют пониженную экспрессию в проигравших клетках, 8 генов — повышенную, а 12 генов не проявляют дифференциальной экспрессии между проигравшими и выигравшими клетками. Было выявлено статистически значимое обогащение генов UPR_ISR среди генов с повышенной экспрессией в проигравших клетках (odds ratio = 3.0, p-value = 0.012). Пересечение между генами UPR_ISR и генами с пониженной экспрессией не является статистически значимым (odds ratio = 1.2, p-value = 0,69)
 
 ```{r}
-library(UpSetR)
 up <- geni_up
 down <- geni_down
 upr <- geni_upr
@@ -1814,7 +1808,6 @@ back_all <- intersect(background_trajectory, background_all)
 Пересечение повышенно экспрессируемых генов (scRNA-seq in vivo) с повышенно экспрессируемыми генами (bulk RNA-seq in vitro): p-value = 0.30; odds ratio = 1.14 - не является статистически значимым результатом.
 
 ```{r}
-library(UpSetR)
 up_1_3_n <- id_up_loser
 down_1_3_n <- id_down_loser
 up_1_4_n <- row.names(up_1_4)
@@ -1973,7 +1966,6 @@ up_vivo_component <- down_output_no
 Все термины, обогащённые среди генов с пониженной экспрессией **in vitro**, также обогащены **in vivo**.
 
 ```{r}
-library(UpSetR)
 down_vivo_component <- down_vivo_component$down_component_no
 up_vivo_component <- up_vivo_component$down_component_no
 down_vitro_component <- down_vitro_component$down_component_no
@@ -2067,8 +2059,6 @@ data_pro <- FindClusters(data_pro, resolution = 0.003)
 
 
 data_pro$"label" <- age_new
-library(repr)
-library(cowplot)
 options(repr.plot.width = 8, repr.plot.height = 3)
 # plot batches and clusters
 # p1 <- DimPlot(ips_combined, reduction = "umap", group.by = "stim", dim.1 = 10, dim.2 = 10)
@@ -3306,10 +3296,6 @@ condition_ci[condition_ci == "DMSO"] <- "DMSO-treated"
 Указаны только те гены, которые находятся на этих участках.
 
 ```{r}
-library(karyoploteR)
-```
-
-```{r}
 mt_name <- read.table(here(data_dir, "useful_mt_names.txt"), sep = "\t", header = T)
 mt_name <- mt_name[mt_name$Chromosome.scaffold.name == "MT", ]
 nomi <- mt_name$Gene.name
@@ -3444,7 +3430,6 @@ kpPlotMarkers(kp, chr = markers$chr, x = markers$pos, labels = markers$labels)
 ## Losing score analysis
 
 ```{r}
-library(gam)
 # setwd("/Users/gabriele.lubatti/Desktop/Phd/Cell_Competition/Script")
 # load(here(data_dir, "time_fmk_epi.Rda"))
 # load(here(data_dir, "cells_epi_fmk.Rda"))
